@@ -138,3 +138,32 @@ canvas {
 #language-switch button:hover {
   background-color: #2980b9;
 }
+#transaction-list li.income {
+  border-left: 5px solid #2ecc71;
+  background-color: #eafaf1;
+}
+
+#transaction-list li.expense {
+  border-left: 5px solid #e74c3c;
+  background-color: #fdecea;
+}
+.error {
+  color: #e74c3c;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+#clear-all {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#clear-all:hover {
+  background-color: #c0392b;
+}
