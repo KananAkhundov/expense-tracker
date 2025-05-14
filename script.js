@@ -13,6 +13,10 @@ const expenseEl = document.getElementById('expense');
 const chartCanvas = document.getElementById('expenseChart');
 const errorMessage = document.getElementById('error-message');
 const clearBtn = document.getElementById('clear-all');
+const modal = document.getElementById('confirm-modal');
+const cancelBtn = document.getElementById('cancel-delete');
+const confirmBtn = document.getElementById('confirm-delete');
+
 
 // === Input Filtering ===
 amountInput.addEventListener('input', function () {
@@ -113,13 +117,41 @@ function renderUI() {
 // === Clear All Button Logic ===
 if (clearBtn) {
   clearBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to delete all transactions?')) {
-      transactions.length = 0;
-      saveTransactions();
-      renderUI();
-    }
+    modal.classList.remove('hidden');
+  });
+
+  cancelBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  confirmBtn.addEventListener('click', () => {
+    transactions.length = 0;
+    saveTransactions();
+    renderUI();
+    modal.classList.add('hidden');
   });
 }
+const darkToggle = document.getElementById('dark-toggle');
+
+// Load preference
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  darkToggle.textContent = '☀️';
+}
+
+// Toggle theme
+darkToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  darkToggle.textContent = isDark ? '☀️' : '🌙';
+});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker registered'))
+    .catch(error => console.error('❌ SW registration failed', error));
+}
+
 
 // === Initial Load ===
 renderUI();

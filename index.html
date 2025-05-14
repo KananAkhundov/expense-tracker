@@ -1,67 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Real-time Expense Tracker</title>
-        <link rel = "stylesheet" href="styles.css">
-    </head>
-    <body>
-        <header>
-            <h1>Expense Tracker</h1>
-            <div id="language-switch">
-                <button onclick="switchLanguage('en')">English</button>
-                <button onclick="switchLanguage('az')">Azərbaycan dili</button>
-            </div>
-        </header>
-        <main>
-            <!--balance overview-->
-            <section id="summary">
-                <h2>Balance: <span id="balance">$0.00</span></h2>
-                <div class="summary-box">
-                    <div>Income: <span id="income">$0.00</span></div>
-                    <div>Expense: <span id="expense">$0.00</span></div>
-                </div>
-            </section>
-            <section id="form-section">
-                <h3>Add Transaction</h3>
-                <form id="transaction-form">
-                    <input type="text" id="description" placeholder="Description" required />
-                    <input type="text" id="amount" placeholder="Amount (+/-)" inputmode="text" pattern="[0-9+-]+" required />
-                    <select id="category">
-                        <option value="Food">Food</option>
-                        <option value="Rent">Rent</option>
-                        <option value="Salary">Salary</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <button type="submit">Add Transaction</button>
-                </form>
-                <p id="error-message" class="error"></p>
-            </section>
-            
-                <!-- Transaction List -->
-            <section id="transactions">
-                <h3>Transaction History</h3>
-                <ul id="transaction-list"></ul>
-            </section>
-                <!-- Chart Section -->
-            <section id="chart-section">
-                <h3>Spending Breakdown</h3>
-                <canvas id="expenseChart"></canvas>
-            </section>
-            <button id="clear-all">Clear All</button>
-        </main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-time Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#3498db" />
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script type ="module" src="script.js"></script>
-        <script>
-            function switchLanguage(lang) {
-                if (lang === 'az') {
-                    window.location.href = 'index.az.html';
-                } else if (lang === 'en') {
-                    window.location.href = 'index.html';
-                }
-            }
-        </script>
-    </body>
+</head>
+<body>
+  <header>
+    
+    <h1>Expense Tracker</h1>
+    <div id="language-switch">
+      <button onclick="switchLanguage('en')">English</button>
+      <button onclick="switchLanguage('az')">Azərbaycan dili</button>
+    </div>
+    <div id="theme-toggle">
+        <button id="dark-toggle">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- === Add Transaction Page === -->
+    <section id="add-page" class="page">
+      <h3>Add Transaction</h3>
+      <form id="transaction-form">
+        <input type="text" id="description" placeholder="Description" required />
+        <input type="text" id="amount" placeholder="Amount (+/-)" inputmode="text" pattern="[0-9+-]+" required />
+        <select id="category">
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚌 Transport</option>
+            <option value="Rent">🏠 Rent</option>
+            <option value="Utilities">💡 Utilities</option>
+            <option value="Salary">💼 Salary</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Healthcare">💊 Healthcare</option>
+            <option value="Entertainment">🎮 Entertainment</option>
+            <option value="Education">📚 Education</option>
+            <option value="Travel">✈️ Travel</option>
+            <option value="Subscriptions">🔄 Subscriptions</option>
+            <option value="Gifts">🎁 Gifts</option>
+            <option value="Investment">📈 Investment</option>
+            <option value="Savings">💰 Savings</option>
+            <option value="Other">🔹 Other</option>
+        </select>
+
+        <button type="submit">Add Transaction</button>
+      </form>
+      <p id="error-message" class="error"></p>
+    </section>
+
+    <!-- === History Page === -->
+    <section id="history-page" class="page hidden">
+      <section id="summary">
+        <h2>Balance: <span id="balance">$0.00</span></h2>
+        <div class="summary-box">
+          <div>Income: <span id="income">$0.00</span></div>
+          <div>Expense: <span id="expense">$0.00</span></div>
+        </div>
+      </section>
+
+      <section id="transactions">
+        <h3>Transaction History</h3>
+        <ul id="transaction-list"></ul>
+      </section>
+
+      <section id="chart-section">
+        <h3>Spending Breakdown</h3>
+        <canvas id="expenseChart"></canvas>
+      </section>
+
+      <button id="clear-all">Clear All</button>
+    </section>
+  </main>
+
+  <!-- === Bottom Tab Bar === -->
+  <nav id="bottom-nav">
+    <button id="tab-add">➕ Add</button>
+    <button id="tab-history">📜 History</button>
+  </nav>
+
+  <!-- === Confirmation Modal === -->
+  <div id="confirm-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Confirm Deletion</h3>
+      <p>Are you sure you want to delete all transactions?</p>
+      <div class="modal-actions">
+        <button id="cancel-delete">Cancel</button>
+        <button id="confirm-delete">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === Scripts === -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="script.js"></script>
+  <script>
+    function switchLanguage(lang) {
+      window.location.href = lang === 'az' ? 'index.az.html' : 'index.html';
+    }
+
+    // Tab switching
+    document.getElementById('tab-add').addEventListener('click', () => {
+      document.getElementById('add-page').classList.remove('hidden');
+      document.getElementById('history-page').classList.add('hidden');
+    });
+
+    document.getElementById('tab-history').addEventListener('click', () => {
+      document.getElementById('history-page').classList.remove('hidden');
+      document.getElementById('add-page').classList.add('hidden');
+    });
+  </script>
+</body>
 </html>
