@@ -1,0 +1,120 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  color: #2c3e50;
+}
+
+/* Main layout */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Summary section */
+#summary {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#balance {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.summary-box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.summary-box div {
+  font-size: 1.1em;
+}
+
+/* Form section */
+#form-section {
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, select, button {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Transaction list */
+#transactions {
+  margin-bottom: 30px;
+}
+
+#transaction-list {
+  list-style: none;
+}
+
+#transaction-list li {
+  background-color: #ecf0f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-left: 5px solid #3498db;
+}
+
+/* Chart section */
+#chart-section {
+  margin-top: 30px;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .summary-box {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
