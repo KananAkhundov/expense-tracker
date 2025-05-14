@@ -10,16 +10,26 @@ const balanceEl = document.getElementById('balance');
 const incomeEl = document.getElementById('income');
 const expenseEl = document.getElementById('expense');
 const chartCanvas = document.getElementById('expenseChart');
-
+amountInput.addEventListener('input', function () {
+  this.value = this.value.replace(/[^0-9+-\.]/g, '');
+});
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   const description = descriptionInput.value.trim();
-  const amount = parseFloat(amountInput.value);
+  const amountStr = amountInput.value.trim(); // Keep raw input
   const category = categoryInput.value;
 
-  if (!description || isNaN(amount)) {
-    alert('Please enter valid data.');
+  // Validate amount format: only digits, optional +/-, optional decimals
+  if (!/^[+-]?\d+(\.\d+)?$/.test(amountStr)) {
+    alert('Amount must be a number and can include + or - sign.');
+    return;
+  }
+
+  const amount = parseFloat(amountStr);
+
+  if (!description) {
+    alert('Please enter a description.');
     return;
   }
 
@@ -33,6 +43,7 @@ form.addEventListener('submit', function (e) {
   renderUI();
   form.reset();
 });
+
 
 function renderTransactions() {
   transactionList.innerHTML = '';

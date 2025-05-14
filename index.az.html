@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-time Xərc İzləyici</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Xərc İzləyici</h1>
+    <div id="language-switch">
+        <button onclick="switchLanguage('en')">English</button>
+        <button onclick="switchLanguage('az')">Azərbaycan dili</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Balans Xülasəsi -->
+    <section id="summary">
+      <h2>Balans: <span id="balance">$0.00</span></h2>
+      <div class="summary-box">
+        <div>Gəlir: <span id="income">$0.00</span></div>
+        <div>Xərc: <span id="expense">$0.00</span></div>
+      </div>
+    </section>
+
+    <!-- Əməliyyat Əlavə Forması -->
+    <section id="form-section">
+      <h3>Əməliyyat Əlavə Et</h3>
+      <form id="transaction-form">
+        <input type="text" id="description" placeholder="Təsvir" required />
+        <input type="text" id="amount" placeholder="Amount (+/-)" inputmode="text" pattern="[0-9+-]+" required />
+        <select id="category">
+          <option value="food">Qida</option>
+          <option value="rent">Kirayə</option>
+          <option value="salary">Maaş</option>
+          <option value="other">Digər</option>
+        </select>
+        <button type="submit">Əlavə Et</button>
+      </form>
+    </section>
+
+    <!-- Əməliyyat Siyahısı -->
+    <section id="transactions">
+      <h3>Əməliyyat Tarixi</h3>
+      <ul id="transaction-list"></ul>
+    </section>
+
+    <!-- Qrafik Bölməsi -->
+    <section id="chart-section">
+      <h3>Xərclərin Paylanması</h3>
+      <canvas id="expenseChart"></canvas>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="script.js"></script>
+  <script>
+    function switchLanguage(lang) {
+        if (lang =='az'){
+            window.location.href = 'index.az.html';
+        } else if (lang == 'en'){
+            window.location.href = 'index.html'
+        }
+    }
+  </script>
+</body>
+</html>

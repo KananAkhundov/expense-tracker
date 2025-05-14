@@ -8,6 +8,10 @@
     <body>
         <header>
             <h1>Expense Tracker</h1>
+            <div id="language-switch">
+                <button onclick="switchLanguage('en')">English</button>
+                <button onclick="switchLanguage('az')">Azərbaycan dili</button>
+            </div>
         </header>
         <main>
             <!--balance overview-->
@@ -22,7 +26,7 @@
                 <h3>Add Transaction</h3>
                 <form id="transaction-form">
                     <input type="text" id="description" placeholder="Description" required />
-                    <input type="number" id="amount" placeholder="Amount (+/-)" required />
+                    <input type="text" id="amount" placeholder="Amount (+/-)" inputmode="text" pattern="[0-9+-]+" required />
                     <select id="category">
                         <option value="Food">Food</option>
                         <option value="Rent">Rent</option>
@@ -46,5 +50,14 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type ="module" src="script.js"></script>
+        <script>
+            function switchLanguage(lang) {
+                if (lang === 'az') {
+                    window.location.href = 'index.az.html';
+                } else if (lang === 'en') {
+                    window.location.href = 'index.html';
+                }
+            }
+        </script>
     </body>
 </html>
